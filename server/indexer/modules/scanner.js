@@ -83,7 +83,8 @@ const Scanner = {
         artist: tags.artist,
         album: tags.album,
         year: tags.year,
-        lyrics: (tags.lyrics ? tags.lyrics.lyrics : null)
+        lyrics: (tags.lyrics ? tags.lyrics.lyrics : null),
+        file: file
       };
 
       return Track.findOneAndUpdate(track, { $set: track }, { upsert: true, new: true });

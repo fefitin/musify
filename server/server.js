@@ -19,6 +19,7 @@ app.get('/api/albums', API.albums);
 app.get('/api/albums/:id', API.album);
 app.get('/api/albums/:id/tracks', API.albumTracks);
 app.get('/api/tracks', API.tracks);
+app.get('/api/tracks/:id', API.track);
 
 app.listen(port, () => {
   console.log('Server started!');
