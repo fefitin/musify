@@ -7,7 +7,7 @@ const API = require('./modules/API.js')
 mongoose.connect(process.env.MUSIFY_MONGODB_SERVER, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 app.get('/files/*', streamer);
 
@@ -22,5 +22,5 @@ app.get('/api/tracks', API.tracks);
 app.get('/api/tracks/:id', API.track);
 
 app.listen(port, () => {
-  console.log('Server started!');
+  console.log(`Listening on port ${port}`);
 });
