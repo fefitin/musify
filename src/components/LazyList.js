@@ -12,10 +12,16 @@ export default function LazyList(props) {
   useEffect(() => {
     setLoading(true);
 
-    fetch(skip, size).then(items => {
-      setItems(currentItems => [...currentItems, ...items]);
-      setLoading(false);
-    });
+    if(typeof fetch === 'function') {
+      fetch(skip, size).then(items => {
+        if(skip === 0) {
+          setItems(items);
+        } else {
+          setItems(currentItems => [...currentItems, ...items]);
+        }
+        setLoading(false);
+      });
+    }
   }, [ fetch, skip ]);
   
   useEffect(() => {

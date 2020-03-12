@@ -13,6 +13,12 @@ const ArtistModel = {
       res.artists = res.artists.map(ArtistModel.preprocess);
       return res;
     });
+  },
+
+  get(id) {
+    return API.get(`artists/${id}`).then(res => {
+      return ArtistModel.preprocess(res);
+    });
   }
 };
 

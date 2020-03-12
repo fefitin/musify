@@ -6,6 +6,7 @@ import {
   NavLink
 } from 'react-router-dom';
 import './css/App.scss';
+import ArtistAlbums from './pages/ArtistAlbums';
 import Artists from './pages/Artists';
 import Albums from './pages/Albums';
 import Songs from './pages/Songs';
@@ -15,6 +16,9 @@ export default function App() {
     <Router>
       <main id="main">
         <Switch>
+          <Route path="/artists/:artistId">
+            <ArtistAlbums />
+          </Route>
           <Route path="/artists">
             <Artists />
           </Route>

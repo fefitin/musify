@@ -13,6 +13,13 @@ const AlbumModel = {
       res.albums = res.albums.map(AlbumModel.preprocess);
       return res;
     });
+  },
+
+  listForArtist(artistId, skip = null, limit = null) {
+    return API.get(`artists/${artistId}/albums`, { skip, limit }).then(res => {
+      res.albums = res.albums.map(AlbumModel.preprocess);
+      return res;
+    });
   }
 };
 
