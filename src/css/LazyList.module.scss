@@ -1,0 +1,41 @@
+.listing {
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(100% + 4em);
+    margin-left: -2em;
+
+    li {
+        display: block;
+        width: 22rem;
+        padding: 2em;
+        margin-bottom: 2em;
+    }
+
+    .image {
+        display: block;
+        width: 100%;
+        padding-bottom: 100%;
+        position: relative;
+        margin-bottom: 2rem;
+
+        img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+
+    .artist .image {
+        border-radius: 100%;
+        overflow: hidden;
+    }
+
+    .name {
+        font-size: 1.4rem;
+        color: var(--highlight);
+        text-align: center;
+        font-weight: 900;
+    }
+}

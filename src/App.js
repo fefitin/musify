@@ -1,26 +1,50 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  NavLink
+} from 'react-router-dom';
+import './css/App.scss';
+import Artists from './pages/Artists';
+import Albums from './pages/Albums';
+import Songs from './pages/Songs';
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <main id="main">
+        <Switch>
+          <Route path="/artists">
+            <Artists />
+          </Route>
+          <Route path="/albums">
+            <Albums />
+          </Route>
+          <Route path="/songs">
+            <Songs />
+          </Route>
+        </Switch>
+      </main>
+      <aside id="menu">
+        <nav>
+          <h2>Your library</h2>
+          <ul>
+            <li>
+              <NavLink to="/artists" activeClassName="active">Artists</NavLink>
+            </li>
+            <li>
+              <NavLink to="/albums" activeClassName="active">Albums</NavLink>
+            </li>
+            <li>
+              <NavLink to="/songs" activeClassName="active">Songs</NavLink>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <footer id="player">
+        
+      </footer>
+    </Router>
   );
 }
-
-export default App;

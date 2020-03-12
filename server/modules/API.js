@@ -99,6 +99,22 @@ const API = {
     res.send(JSON.stringify({ tracks, total }));
   },
 
+  albumImage: async function(req, res) {
+    if(!mongoose.isValidObjectId(req.params.id)) {
+      return res.send(JSON.stringify({ error: "Invalid ID" }));
+    }
+
+    const album = await Album.findOne({ _id: req.params.id }, { __v: 0 });
+    Spotify.album(album.name, album.artist).then(url => {
+      album.image = url;
+      album.save();
+      
+      res.redirect(url);
+    }).catch(() => {
+      res.status(404).send('Not found');
+    });
+  },
+
   tracks: async function(req, res) {
     const skip = (!isNaN(req.query.skip) ? parseInt(req.query.skip) : 0);
     const limit = (!isNaN(req.query.limit) ? parseInt(req.query.limit) : API.paging);

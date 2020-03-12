@@ -24,6 +24,7 @@ app.get('/api/artists/:id/image', API.artistImage);
 app.get('/api/albums', API.albums);
 app.get('/api/albums/:id', API.album);
 app.get('/api/albums/:id/tracks', API.albumTracks);
+app.get('/api/albums/:id/image', API.albumImage);
 app.get('/api/tracks', API.tracks);
 app.get('/api/tracks/:id', API.track);
 

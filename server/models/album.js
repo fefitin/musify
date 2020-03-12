@@ -4,4 +4,5 @@ module.exports = mongoose.model('Album', {
   name: String,
   artist: String,
   year: Number,
+  image: String
 });

@@ -59,6 +59,21 @@ const Spotify = {
         }
       }).catch(reject);
     });
+  },
+
+  album: function(name, artist) {
+    return new Promise((resolve, reject) => {
+      Spotify.get('search', {
+        q: `${name} ${artist}`,
+        type: 'album'
+      }).then(data => {
+        if(data.albums.items.length && data.albums.items[0].images.length) {
+          resolve(data.albums.items[0].images[0].url);
+        } else {
+          reject();
+        }
+      }).catch(reject);
+    });
   }
 }
 
