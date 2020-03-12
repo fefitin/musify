@@ -9,12 +9,18 @@ mongoose.connect(process.env.MUSIFY_MONGODB_SERVER, { useNewUrlParser: true, use
 const app = express();
 const port = process.env.PORT || 8080;
 
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  next();
+});
+
 app.get('/files/*', streamer);
 
 app.get('/api/artists', API.artists);
 app.get('/api/artists/:id', API.artist);
 app.get('/api/artists/:id/albums', API.artistAlbums);
 app.get('/api/artists/:id/tracks', API.artistTracks);
+app.get('/api/artists/:id/image', API.artistImage);
 app.get('/api/albums', API.albums);
 app.get('/api/albums/:id', API.album);
 app.get('/api/albums/:id/tracks', API.albumTracks);

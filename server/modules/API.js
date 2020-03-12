@@ -1,6 +1,7 @@
 const Artist = require('./../models/artist');
 const Album = require('./../models/album');
 const Track = require('./../models/track');
+const Spotify = require('./Spotify');
 const mongoose = require('mongoose');
 
 const API = {
@@ -51,6 +52,22 @@ const API = {
     const total = await Track.countDocuments({ artistId: req.params.id });
 
     res.send(JSON.stringify({ tracks, total }));
+  },
+
+  artistImage: async function(req, res) {
+    if(!mongoose.isValidObjectId(req.params.id)) {
+      return res.send(JSON.stringify({ error: "Invalid ID" }));
+    }
+
+    const artist = await Artist.findOne({ _id: req.params.id }, { __v: 0 });
+    Spotify.artist(artist.name).then(url => {
+      artist.image = url;
+      artist.save();
+      
+      res.redirect(url);
+    }).catch(() => {
+      res.status(404).send('Not found');
+    });
   },
 
   albums: async function(req, res) {
