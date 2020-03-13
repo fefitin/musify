@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const jsmediatags = require("jsmediatags");
+const { getAudioDurationInSeconds } = require('get-audio-duration')
 const Artist = require("./../../models/artist");
 const Album = require("./../../models/album");
 const Track = require("./../../models/track");
@@ -44,15 +45,20 @@ const Scanner = {
     //Get file data from ID3 tags
     return new Promise((resolve, reject) => {
       new jsmediatags.Reader(file)
-        .setTagsToRead(['title', 'artist', 'album', 'year', 'lyrics'])
+        .setTagsToRead(['title', 'artist', 'album', 'year', 'lyrics', 'track'])
         .read({
           onSuccess: (tag) => {
             if(tag.tags.artist && tag.tags.album && tag.tags.title) {
-              Scanner.store(file, tag.tags).then(track => {
-                console.log(`Indexed track ${track._id} titled ${track.title} (${track.album} - ${track.artist})`);
-              }).finally(() => {
-                resolve();
-              });
+              getAudioDurationInSeconds(file).then(length => {
+                tag.tags.length = length;
+
+                Scanner.store(file, tag.tags).then(track => {
+                  console.log(`Indexed track ${track._id} titled ${track.title} (${track.album} - ${track.artist})`);
+                }).finally(() => {
+                  resolve();
+                });
+
+              }).catch(reject);
             } else {
               resolve();
             }
@@ -68,8 +74,21 @@ const Scanner = {
   store: function(file, tags) {
     /*
       Use stored artist and album or create new
-      before saving track
+      before saving track.
+
+      tags.track can be a single number or
+      the track number plus the total number of tracks
+      in the album (eg: 1/12)
     */
+    let trackNo = null;
+
+    if(typeof tags.track === 'string') {
+      let trackData = tags.track.split('/');
+      trackNo = trackData[0];
+    } else {
+      trackNo = tags.track;
+    }
+
     return Artist.findOneAndUpdate({ name: tags.artist }, { $set: { name: tags.artist }}, { upsert: true, new: true }).then(artist => {
       const album = {
         artistId: artist._id,
@@ -88,6 +107,8 @@ const Scanner = {
         album: tags.album,
         year: tags.year,
         lyrics: (tags.lyrics ? tags.lyrics.lyrics : null),
+        track: trackNo,
+        length: tags.length,
         file: file
       };
 
