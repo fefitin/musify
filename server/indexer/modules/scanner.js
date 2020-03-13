@@ -89,15 +89,29 @@ const Scanner = {
       trackNo = tags.track;
     }
 
+    /* tags.year can be a date */
+    if(isNaN(tags.year)) {
+      let year = new Date(tags.year);
+      if(!isNaN(year.getFullYear())) {
+        tags.year = year.getFullYear();
+      } else {
+        tags.year = null;
+      }
+    }
+
     return Artist.findOneAndUpdate({ name: tags.artist }, { $set: { name: tags.artist }}, { upsert: true, new: true }).then(artist => {
       const album = {
         artistId: artist._id,
-        name: tags.album,
+        name: tags.album
+      };
+
+      const newAlbum = {
+        ...album,
         artist: artist.name,
         year: tags.year
       };
 
-      return Album.findOneAndUpdate(album, { $set: album }, { upsert: true, new: true });
+      return Album.findOneAndUpdate(album, { $set: newAlbum }, { upsert: true, new: true });
     }).then(album => {
       const track = { 
         artistId: album.artistId,
