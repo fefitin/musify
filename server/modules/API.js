@@ -3,6 +3,7 @@ const Album = require('./../models/album');
 const Track = require('./../models/track');
 const Spotify = require('./Spotify');
 const mongoose = require('mongoose');
+const path = require('path');
 
 const API = {
   paging: 10,
@@ -66,7 +67,7 @@ const API = {
       
       res.redirect(url);
     }).catch(() => {
-      res.status(404).send('Not found');
+      res.sendFile(path.join(__dirname, '../public/icon.svg'));
     });
   },
 
@@ -111,7 +112,7 @@ const API = {
       
       res.redirect(url);
     }).catch(() => {
-      res.status(404).send('Not found');
+      res.sendFile(path.join(__dirname, '../public/icon.svg'));
     });
   },
 

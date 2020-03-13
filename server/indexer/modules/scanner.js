@@ -47,11 +47,15 @@ const Scanner = {
         .setTagsToRead(['title', 'artist', 'album', 'year', 'lyrics'])
         .read({
           onSuccess: (tag) => {
-            Scanner.store(file, tag.tags).then(track => {
-              console.log(`Indexed track ${track._id} titled ${track.title} (${track.album} - ${track.artist})`);
-            }).finally(() => {
+            if(tag.tags.artist && tag.tags.album && tag.tags.title) {
+              Scanner.store(file, tag.tags).then(track => {
+                console.log(`Indexed track ${track._id} titled ${track.title} (${track.album} - ${track.artist})`);
+              }).finally(() => {
+                resolve();
+              });
+            } else {
               resolve();
-            });
+            }
           },
           onError: (error) => {
             console.error(`Cannot read ${file}: ${error.info}`);

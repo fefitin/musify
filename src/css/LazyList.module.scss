@@ -9,6 +9,12 @@
         width: 22rem;
         padding: 2em;
         margin-bottom: 2em;
+        transform: scale(1, 1);
+        transition: transform 0.2s;
+
+        &:hover {
+            transform: scale(1.05, 1.05);
+        }
     }
 
     .image {
@@ -17,6 +23,9 @@
         padding-bottom: 100%;
         position: relative;
         margin-bottom: 2rem;
+        overflow: hidden;
+        border-radius: 2px;
+        box-shadow: 2px 2px 1px rgba(0,0,0,0.4);
 
         img {
             position: absolute;
@@ -29,7 +38,6 @@
 
     .artist .image {
         border-radius: 100%;
-        overflow: hidden;
     }
 
     .name {
