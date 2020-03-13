@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import styles from './../css/LazyList.module.scss';
 
 export default function TrackLazyListItem(props) {
