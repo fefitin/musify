@@ -42,7 +42,9 @@ export default function Album(props) {
         </div>
       </header>
 
-      <LazyList fetch={fetch} children={AlbumTrackLazyListItem} className="tracks" />
+      <div className="content">
+        <LazyList fetch={fetch} children={AlbumTrackLazyListItem} className="tracks" />
+      </div>
     </div>
   );
 }

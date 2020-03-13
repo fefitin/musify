@@ -12,8 +12,13 @@ export default function Artists(props) {
 
   return (
     <div id="artists">
-      <h1>Artists</h1>
-      <LazyList fetch={fetch} children={ArtistLazyListItem} />
+      <header>
+        <h1>Artists</h1>
+      </header>
+      
+      <div className="content">
+        <LazyList fetch={fetch} children={ArtistLazyListItem} />
+      </div>
     </div>
   );
 }
