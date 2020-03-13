@@ -87,6 +87,46 @@ a {
     border-bottom: 1px solid #444;
     padding-bottom: 0.3em;
   } 
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    align-items: center;
+
+    .image {
+      position: relative;
+      padding-bottom: 20rem;
+      width: 20rem;
+      overflow: hidden;
+      border-radius: 2px;
+      box-shadow: 2px 2px 1px rgba(0,0,0,0.4);
+
+      img {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+      }
+    }
+
+    .info {
+      flex-grow: 1;
+      margin-left: 2rem;
+    }
+    
+    h1 {
+      border-bottom: 0 none;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2, p {
+      font-size: 1.4em;
+      margin-top: 0.5em
+    }
+  }
 }
 
 #player {

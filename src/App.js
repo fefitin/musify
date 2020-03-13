@@ -7,9 +7,10 @@ import {
 } from 'react-router-dom';
 import './css/App.scss';
 import ArtistAlbums from './pages/ArtistAlbums';
+import Album from './pages/Album';
 import Artists from './pages/Artists';
 import Albums from './pages/Albums';
-import Songs from './pages/Songs';
+import Tracks from './pages/Tracks';
 
 export default function App() {
   return (
@@ -22,11 +23,14 @@ export default function App() {
           <Route path="/artists">
             <Artists />
           </Route>
+          <Route path="/albums/:albumId">
+            <Album />
+          </Route>
           <Route path="/albums">
             <Albums />
           </Route>
-          <Route path="/songs">
-            <Songs />
+          <Route path="/tracks">
+            <Tracks />
           </Route>
         </Switch>
       </main>
@@ -41,7 +45,7 @@ export default function App() {
               <NavLink to="/albums" activeClassName="active">Albums</NavLink>
             </li>
             <li>
-              <NavLink to="/songs" activeClassName="active">Songs</NavLink>
+              <NavLink to="/tracks" activeClassName="active">Tracks</NavLink>
             </li>
           </ul>
         </nav>

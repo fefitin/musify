@@ -4,6 +4,7 @@ const Track = require('./../models/track');
 const Spotify = require('./Spotify');
 const mongoose = require('mongoose');
 const path = require('path');
+const streamer = require('./streamer.js')
 
 const API = {
   paging: 10,
@@ -49,7 +50,7 @@ const API = {
     const skip = (!isNaN(req.query.skip) ? parseInt(req.query.skip) : 0);
     const limit = (!isNaN(req.query.limit) ? parseInt(req.query.limit) : API.paging);
     
-    const tracks = await Track.find({ artistId: req.params.id }, { __v: 0, lyrics: 0 }, { skip, limit });
+    const tracks = await Track.find({ artistId: req.params.id }, { __v: 0, lyrics: 0 }, { skip, limit }).sort({ track: 1 });
     const total = await Track.countDocuments({ artistId: req.params.id });
 
     res.send(JSON.stringify({ tracks, total }));
@@ -87,6 +88,8 @@ const API = {
     }
 
     const album = await Album.findOne({ _id: req.params.id }, { __v: 0 });
+    const tracks = await Track.find({ albumId: req.params.id }, { __v: 0, lyrics: 0 });
+    album.tracks = tracks;
     res.send(JSON.stringify(album));
   },
 
@@ -94,7 +97,7 @@ const API = {
     if(!mongoose.isValidObjectId(req.params.id)) {
       return res.send(JSON.stringify({ error: "Invalid ID" }));
     }
-    const tracks = await Track.find({ albumId: req.params.id }, { __v: 0, lyrics: 0 });
+    const tracks = await Track.find({ albumId: req.params.id }, { __v: 0, lyrics: 0 }).sort({ track: 1 });
     const total = await Track.countDocuments({ albumId: req.params.id });
 
     res.send(JSON.stringify({ tracks, total }));
@@ -120,7 +123,7 @@ const API = {
     const skip = (!isNaN(req.query.skip) ? parseInt(req.query.skip) : 0);
     const limit = (!isNaN(req.query.limit) ? parseInt(req.query.limit) : API.paging);
 
-    const tracks = await Track.find(null, { __v: 0, lyrics: 0 }, { skip, limit });
+    const tracks = await Track.find(null, { __v: 0, lyrics: 0 }, { skip, limit }).sort({ artist: 1, album: 1, track: 1 });
     const total = await Track.countDocuments();
 
     res.send(JSON.stringify({ tracks, total }));
@@ -133,6 +136,15 @@ const API = {
 
     const track = await Track.findOne({ _id: req.params.id }, { __v: 0 });
     res.send(JSON.stringify(track));
+  },
+
+  stream: async function(req, res) {
+    if(!mongoose.isValidObjectId(req.params.id)) {
+      return res.send(JSON.stringify({ error: "Invalid ID" }));
+    }
+
+    const track = await Track.findOne({ _id: req.params.id }, { __v: 0 });
+    streamer(track.file, req, res);
   },
 
 };

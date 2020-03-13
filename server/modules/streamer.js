@@ -8,9 +8,7 @@ const path = require('path');
 const fs = require('fs');
 const { promisify } = require('util');
 
-module.exports = async (req, res) => {
-  const file = path.join(__dirname + decodeURI(req.path));
-
+module.exports = async (file, req, res) => {
   if (!fs.existsSync(file)) {
     return res.status(404).send(`Not found ${req.path}`);
   }

@@ -44,5 +44,5 @@ export default function LazyList(props) {
     return <li key={item._id}>{child}</li>;
   });
 
-  return (<ul className={styles.listing}>{listItems}</ul>)
+  return (<ul className={`${styles[props.className]} ${styles.listing}`}>{listItems}</ul>)
 }

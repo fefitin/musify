@@ -7,5 +7,7 @@ module.exports = mongoose.model('Track', {
   album: String,
   year: Number,
   lyrics: String,
-  file: String
+  file: String,
+  track: Number,
+  length: Number
 });

@@ -46,4 +46,46 @@
         text-align: center;
         font-weight: 900;
     }
+
+    &.tracks {
+        display: block;
+
+        li {
+            width: auto;
+            padding-top: 1.25em;
+            padding-bottom: 1.25em;
+            margin-bottom: 0;
+            transform: none;
+            border-bottom: 1px solid #333;
+        }
+
+        .track {
+            font-size: 1.4rem;
+            display: flex;
+            text-decoration: none;
+
+            .no {
+                width: 2em;
+                flex-grow: 0;
+                color: var(--main);
+            }
+
+            .name, .album, .artist {
+                flex-grow: 1;
+                text-align: left;
+                font-weight: normal;
+                width: 30%;
+            }
+
+            .album, .artist {
+                color: var(--main);
+            }
+
+            .length {
+                width: 4em;
+                text-align: right;
+                flex-grow: 0;
+            }
+        }
+    }
 }

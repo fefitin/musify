@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const streamer = require('./modules/streamer.js')
 const mongoose = require('mongoose');
 const API = require('./modules/API.js')
 
@@ -14,8 +13,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/files/*', streamer);
-
 app.get('/api/artists', API.artists);
 app.get('/api/artists/:id', API.artist);
 app.get('/api/artists/:id/albums', API.artistAlbums);
@@ -27,6 +24,7 @@ app.get('/api/albums/:id/tracks', API.albumTracks);
 app.get('/api/albums/:id/image', API.albumImage);
 app.get('/api/tracks', API.tracks);
 app.get('/api/tracks/:id', API.track);
+app.get('/api/tracks/:id/stream', API.stream);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

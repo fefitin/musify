@@ -5,7 +5,7 @@ import AlbumModel from '../models/AlbumModel';
 import AlbumLazyListItem from '../components/AlbumLazyListItem';
 import { useParams } from "react-router-dom";
 
-export default function Albums(props) {
+export default function ArtistAlbums(props) {
   const { artistId } = useParams();
   const [title, setTitle] = useState([]);
   
