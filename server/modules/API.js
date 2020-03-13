@@ -36,7 +36,7 @@ const API = {
     const skip = (!isNaN(req.query.skip) ? parseInt(req.query.skip) : 0);
     const limit = (!isNaN(req.query.limit) ? parseInt(req.query.limit) : API.paging);
     
-    const albums = await Album.find({ artistId: req.params.id }, { __v: 0 }, { skip, limit }).sort({ name: 1 });
+    const albums = await Album.find({ artistId: req.params.id }, { __v: 0 }, { skip, limit }).sort({ year: -1, name: 1 });
     const total = await Album.countDocuments({ artistId: req.params.id });
 
     res.send(JSON.stringify({ albums, total }));
@@ -76,7 +76,7 @@ const API = {
     const skip = (!isNaN(req.query.skip) ? parseInt(req.query.skip) : 0);
     const limit = (!isNaN(req.query.limit) ? parseInt(req.query.limit) : API.paging);
 
-    const albums = await Album.find(null, { __v: 0 }, { skip, limit }).sort({ name: 1 });
+    const albums = await Album.find(null, { __v: 0 }, { skip, limit }).sort({ year: -1, name: 1 });
     const total = await Album.countDocuments();
 
     res.send(JSON.stringify({ albums, total }));
