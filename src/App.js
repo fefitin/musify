@@ -51,7 +51,7 @@ export default function App() {
         </nav>
       </aside>
       <footer id="player">
-        
+        <audio id="audio" controls></audio>
       </footer>
     </Router>
   );
