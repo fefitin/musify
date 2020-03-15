@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import LazyList from '../components/LazyList';
 import AlbumModel from '../models/AlbumModel';
-import AlbumTrackLazyListItem from '../components/AlbumTrackLazyListItem';
+import AlbumTrackLazyListItemLink from '../containers/AlbumTrackLazyListItemLink';
 import { useParams } from "react-router-dom";
 
 export default function Album(props) {
@@ -43,7 +43,7 @@ export default function Album(props) {
       </header>
 
       <div className="content">
-        <LazyList fetch={fetch} children={AlbumTrackLazyListItem} className="tracks" />
+        <LazyList fetch={fetch} children={AlbumTrackLazyListItemLink} className="tracks" />
       </div>
     </div>
   );

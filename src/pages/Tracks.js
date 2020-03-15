@@ -1,7 +1,7 @@
 import React from 'react';
 import LazyList from '../components/LazyList';
 import TrackModel from '../models/TrackModel';
-import TrackLazyListItem from '../components/TrackLazyListItem';
+import TrackLazyListItemLink from '../containers/TrackLazyListItemLink';
 
 export default function Albums(props) {
   const fetch = function(skip, size) {
@@ -16,7 +16,7 @@ export default function Albums(props) {
         <h1>Tracks</h1>
       </header>
       <div className="content">
-        <LazyList fetch={fetch} children={TrackLazyListItem} className="tracks" />
+        <LazyList fetch={fetch} children={TrackLazyListItemLink} className="tracks" />
       </div>
     </div>
   );

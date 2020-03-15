@@ -11,6 +11,7 @@ import Album from './pages/Album';
 import Artists from './pages/Artists';
 import Albums from './pages/Albums';
 import Tracks from './pages/Tracks';
+import ActivePlayer from './containers/ActivePlayer';
 
 export default function App() {
   return (
@@ -51,7 +52,7 @@ export default function App() {
         </nav>
       </aside>
       <footer id="player">
-        <audio id="audio" controls></audio>
+        <ActivePlayer />
       </footer>
     </Router>
   );

@@ -52,17 +52,17 @@
 
         li {
             width: auto;
-            padding-top: 1.25em;
-            padding-bottom: 1.25em;
             margin-bottom: 0;
             transform: none;
             border-bottom: 1px solid #333;
+            padding: 0;
         }
 
         .track {
             font-size: 1.4rem;
             display: flex;
             text-decoration: none;
+            padding: 1.25rem;
 
             .no {
                 width: 2em;
@@ -85,6 +85,10 @@
                 width: 4em;
                 text-align: right;
                 flex-grow: 0;
+            }
+
+            &.active {
+                background-color: #333;
             }
         }
     }
