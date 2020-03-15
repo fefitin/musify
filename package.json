@@ -11,6 +11,7 @@
     "get-audio-duration": "^1.0.0",
     "jsmediatags": "^3.9.3",
     "mongoose": "^5.9.4",
+    "music-metadata": "^6.3.6",
     "node-sass": "^4.13.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",

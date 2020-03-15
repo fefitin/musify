@@ -1,7 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const jsmediatags = require("jsmediatags");
-const { getAudioDurationInSeconds } = require('get-audio-duration')
+const mm = require('music-metadata');
 const Artist = require("./../../models/artist");
 const Album = require("./../../models/album");
 const Track = require("./../../models/track");
@@ -44,30 +43,25 @@ const Scanner = {
   index: function(file) {
     //Get file data from ID3 tags
     return new Promise((resolve, reject) => {
-      new jsmediatags.Reader(file)
-        .setTagsToRead(['title', 'artist', 'album', 'year', 'lyrics', 'track'])
-        .read({
-          onSuccess: (tag) => {
-            if(tag.tags.artist && tag.tags.album && tag.tags.title) {
-              getAudioDurationInSeconds(file).then(length => {
-                tag.tags.length = length;
+      mm.parseFile(file).then(metadata => {
+        const tags = {
+          artist: metadata.common.artist,
+          album: metadata.common.album,
+          title: metadata.common.title,
+          length: metadata.format.duration,
+          track: metadata.common.track.no
+        };
 
-                Scanner.store(file, tag.tags).then(track => {
-                  console.log(`Indexed track ${track._id} titled ${track.title} (${track.album} - ${track.artist})`);
-                }).finally(() => {
-                  resolve();
-                });
-
-              }).catch(reject);
-            } else {
-              resolve();
-            }
-          },
-          onError: (error) => {
-            console.error(`Cannot read ${file}: ${error.info}`);
-            reject();
-          }
-        });
+        if(tags.artist && tags.album && tags.title) {
+          Scanner.store(file, tags).then(track => {
+            console.log(`Indexed track ${track._id} titled ${track.title} (${track.album} - ${track.artist})`);
+          }).finally(() => {
+            resolve();
+          });
+        } else {
+          resolve();
+        }
+      })
     });
   },
 
