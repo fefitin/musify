@@ -16,21 +16,21 @@ const API = {
     const artists = await Artist.find(null, { __v: 0 }, { skip, limit }).sort({ name: 1 });
     const total = await Artist.countDocuments();
 
-    res.send(JSON.stringify({ artists, total }));
+    res.json({ artists, total });
   },
 
   artist: async function(req, res) {
     if(!mongoose.isValidObjectId(req.params.id)) {
-      return res.send(JSON.stringify({ error: "Invalid ID" }));
+      return res.json({ error: "Invalid ID" });
     }
 
     const artist = await Artist.findOne({ _id: req.params.id }, { __v: 0 });
-    res.send(JSON.stringify(artist));
+    res.json(artist);
   },
 
   artistAlbums: async function(req, res) {
     if(!mongoose.isValidObjectId(req.params.id)) {
-      return res.send(JSON.stringify({ error: "Invalid ID" }));
+      return res.json({ error: "Invalid ID" });
     }
 
     const skip = (!isNaN(req.query.skip) ? parseInt(req.query.skip) : 0);
@@ -39,12 +39,12 @@ const API = {
     const albums = await Album.find({ artistId: req.params.id }, { __v: 0 }, { skip, limit }).sort({ year: -1, name: 1 });
     const total = await Album.countDocuments({ artistId: req.params.id });
 
-    res.send(JSON.stringify({ albums, total }));
+    res.json({ albums, total });
   },
 
   artistTracks: async function(req, res) {
     if(!mongoose.isValidObjectId(req.params.id)) {
-      return res.send(JSON.stringify({ error: "Invalid ID" }));
+      return res.json({ error: "Invalid ID" });
     }
 
     const skip = (!isNaN(req.query.skip) ? parseInt(req.query.skip) : 0);
@@ -53,12 +53,12 @@ const API = {
     const tracks = await Track.find({ artistId: req.params.id }, { __v: 0, lyrics: 0 }, { skip, limit }).sort({ track: 1 });
     const total = await Track.countDocuments({ artistId: req.params.id });
 
-    res.send(JSON.stringify({ tracks, total }));
+    res.json({ tracks, total });
   },
 
   artistImage: async function(req, res) {
     if(!mongoose.isValidObjectId(req.params.id)) {
-      return res.send(JSON.stringify({ error: "Invalid ID" }));
+      return res.json({ error: "Invalid ID" });
     }
 
     const artist = await Artist.findOne({ _id: req.params.id }, { __v: 0 });
@@ -79,33 +79,33 @@ const API = {
     const albums = await Album.find(null, { __v: 0 }, { skip, limit }).sort({ year: -1, name: 1 });
     const total = await Album.countDocuments();
 
-    res.send(JSON.stringify({ albums, total }));
+    res.json({ albums, total });
   },
 
   album: async function(req, res) {
     if(!mongoose.isValidObjectId(req.params.id)) {
-      return res.send(JSON.stringify({ error: "Invalid ID" }));
+      return res.json({ error: "Invalid ID" });
     }
 
     const album = await Album.findOne({ _id: req.params.id }, { __v: 0 });
     const tracks = await Track.find({ albumId: req.params.id }, { __v: 0, lyrics: 0 });
     album.tracks = tracks;
-    res.send(JSON.stringify(album));
+    res.json(album);
   },
 
   albumTracks: async function(req, res) {
     if(!mongoose.isValidObjectId(req.params.id)) {
-      return res.send(JSON.stringify({ error: "Invalid ID" }));
+      return res.json({ error: "Invalid ID" });
     }
     const tracks = await Track.find({ albumId: req.params.id }, { __v: 0, lyrics: 0 }).sort({ track: 1 });
     const total = await Track.countDocuments({ albumId: req.params.id });
 
-    res.send(JSON.stringify({ tracks, total }));
+    res.json({ tracks, total });
   },
 
   albumImage: async function(req, res) {
     if(!mongoose.isValidObjectId(req.params.id)) {
-      return res.send(JSON.stringify({ error: "Invalid ID" }));
+      return res.json({ error: "Invalid ID" });
     }
 
     const album = await Album.findOne({ _id: req.params.id }, { __v: 0 });
@@ -126,21 +126,21 @@ const API = {
     const tracks = await Track.find(null, { __v: 0, lyrics: 0 }, { skip, limit }).sort({ artist: 1, album: 1, track: 1 });
     const total = await Track.countDocuments();
 
-    res.send(JSON.stringify({ tracks, total }));
+    res.json({ tracks, total });
   },
 
   track: async function(req, res) {
     if(!mongoose.isValidObjectId(req.params.id)) {
-      return res.send(JSON.stringify({ error: "Invalid ID" }));
+      return res.json({ error: "Invalid ID" });
     }
 
     const track = await Track.findOne({ _id: req.params.id }, { __v: 0 });
-    res.send(JSON.stringify(track));
+    res.json(track);
   },
 
   stream: async function(req, res) {
     if(!mongoose.isValidObjectId(req.params.id)) {
-      return res.send(JSON.stringify({ error: "Invalid ID" }));
+      return res.json({ error: "Invalid ID" });
     }
 
     const track = await Track.findOne({ _id: req.params.id }, { __v: 0 });
